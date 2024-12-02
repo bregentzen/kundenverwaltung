@@ -1,0 +1,111 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2023-10-10T00:00:00.000Z",
+  "__export_source": "insomnia.desktop.app:v2023.4.0",
+  "resources": [
+    {
+      "_id": "wrk_1",
+      "name": "Kunden API",
+      "parentId": null,
+      "_type": "workspace"
+    },
+    {
+      "_id": "env_1",
+      "name": "Base Environment",
+      "parentId": "wrk_1",
+      "_type": "environment",
+      "data": {
+        "base_url": "http://localhost:8080"
+      }
+    },
+    {
+      "_id": "req_1",
+      "name": "Create Kunde",
+      "parentId": "wrk_1",
+      "method": "POST",
+      "url": "{{ base_url }}/kunden",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"name\": \"Max Mustermann\"}"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_2",
+      "name": "Get All Kunden",
+      "parentId": "wrk_1",
+      "method": "GET",
+      "url": "{{ base_url }}/kunden",
+      "_type": "request"
+    },
+    {
+      "_id": "req_3",
+      "name": "Get Kunde by ID",
+      "parentId": "wrk_1",
+      "method": "GET",
+      "url": "{{ base_url }}/kunden/1",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4",
+      "name": "Delete Kunde by ID",
+      "parentId": "wrk_1",
+      "method": "DELETE",
+      "url": "{{ base_url }}/kunden/1",
+      "_type": "request"
+    },
+    {
+      "_id": "req_5",
+      "name": "Update Kunde",
+      "parentId": "wrk_1",
+      "method": "PUT",
+      "url": "{{ base_url }}/kunden/1",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"name\": \"Erika Mustermann\"}"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_6",
+      "name": "Create Adresse",
+      "parentId": "wrk_1",
+      "method": "POST",
+      "url": "{{ base_url }}/kunden/1/adresse",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"strasse\": \"Musterstrasse\", \"hausnummer\": \"1\", \"plz\": \"12345\", \"ort\": \"Musterstadt\"}"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_7",
+      "name": "Update Adresse",
+      "parentId": "wrk_1",
+      "method": "PUT",
+      "url": "{{ base_url }}/kunden/1/adresse",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\"strasse\": \"Neue Strasse\", \"hausnummer\": \"2\", \"plz\": \"54321\", \"ort\": \"Neustadt\"}"
+      },
+      "_type": "request"
+    },
+    {
+      "_id": "req_8",
+      "name": "Delete Adresse",
+      "parentId": "wrk_1",
+      "method": "DELETE",
+      "url": "{{ base_url }}/kunden/1/adresse",
+      "_type": "request"
+    },
+    {
+      "_id": "req_9",
+      "name": "Get Adresse by Kunden ID",
+      "parentId": "wrk_1",
+      "method": "GET",
+      "url": "{{ base_url }}/kunden/1/adresse",
+      "_type": "request"
+    }
+  ]
+}
