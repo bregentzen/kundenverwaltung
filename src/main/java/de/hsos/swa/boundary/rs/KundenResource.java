@@ -8,16 +8,17 @@ import de.hsos.swa.entity.Adresse;
 import de.hsos.swa.entity.Kunde;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.Collection;
 
-@Path("/kunden")
+@Path("/")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@ApplicationScoped
+@RequestScoped
 public class KundenResource {
 
     @Inject
@@ -25,6 +26,7 @@ public class KundenResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/kunden")
     public Response createKunde(KundeWebDTO kundeDTO) {
         kundenService.kundeAnlegen(kundeDTO.getName());
         return Response.status(Response.Status.CREATED).build();
@@ -32,6 +34,7 @@ public class KundenResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/kunden")
     public Collection<KundeWebDTOId> getAllKunden() {
         return kundenService.kundenAbfragen().stream()
                 .map(k -> new KundeWebDTOId(k.getKundennr(), k.getVorname() + " " + k.getNachname()))
@@ -39,7 +42,7 @@ public class KundenResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/kunden/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getKundeById(@PathParam("id") long id) {
         Kunde kunde = kundenService.kundeAbfragen(id);
@@ -52,27 +55,27 @@ public class KundenResource {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/kunden/{id}")
     public Response deleteKundeById(@PathParam("id") long id) {
         boolean deleted = kundenService.kundeLoeschen(id);
         if (deleted) {
-            return Response.noContent().build();
+            return Response.noContent().entity(deleted).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
     @POST
-    @Path("/{id}/adresse")
+    @Path("/adressen/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createAdresse(@PathParam("id") long id, AdresseWebDTO adresse) {
         Adresse adresseEntity = new Adresse(adresse.getStrasse(), adresse.getHausnummer(), adresse.getPlz(), adresse.getOrt());
         kundenService.adresseAnlegen(id, adresseEntity);
-        return Response.status(Response.Status.CREATED).build();
+        return Response.status(Response.Status.CREATED).entity(adresseEntity).build();
     }
 
     @PUT
-    @Path("/{id}/adresse")
+    @Path("/adressen/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response updateAdresse(@PathParam("id") long id, AdresseWebDTO adresse) {
         Adresse adresseEntity = new Adresse(adresse.getStrasse(), adresse.getHausnummer(), adresse.getPlz(), adresse.getOrt());
@@ -81,18 +84,18 @@ public class KundenResource {
     }
 
     @DELETE
-    @Path("/{id}/adresse")
+    @Path("/adressen/{id}")
     public Response deleteAdresse(@PathParam("id") long id) {
         boolean deleted = kundenService.adresseLoeschen(id);
         if (deleted) {
-            return Response.noContent().build();
+            return Response.noContent().entity(deleted).build();
         } else {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
 
     @GET
-    @Path("/{id}/adresse")
+    @Path("/adressen/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAdresseByKundenId(@PathParam("id") long id) {
         Adresse adresse = kundenService.adresseAbfragen(id);
