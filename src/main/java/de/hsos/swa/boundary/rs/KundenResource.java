@@ -14,7 +14,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import java.util.Collection;
 
-@Path("/kunden")
+
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 @ApplicationScoped
@@ -25,6 +25,7 @@ public class KundenResource {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/kunden")
     public Response createKunde(KundeWebDTO kundeDTO) {
         kundenService.kundeAnlegen(kundeDTO.getName());
         return Response.status(Response.Status.CREATED).build();
@@ -32,6 +33,7 @@ public class KundenResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    @Path("/kunden")
     public Collection<KundeWebDTOId> getAllKunden() {
         return kundenService.kundenAbfragen().stream()
                 .map(k -> new KundeWebDTOId(k.getKundennr(), k.getVorname() + " " + k.getNachname()))
@@ -39,7 +41,7 @@ public class KundenResource {
     }
 
     @GET
-    @Path("/{id}")
+    @Path("/kunden/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getKundeById(@PathParam("id") long id) {
         Kunde kunde = kundenService.kundeAbfragen(id);
@@ -52,7 +54,7 @@ public class KundenResource {
     }
 
     @DELETE
-    @Path("/{id}")
+    @Path("/kunden/{id}")
     public Response deleteKundeById(@PathParam("id") long id) {
         boolean deleted = kundenService.kundeLoeschen(id);
         if (deleted) {
