@@ -56,23 +56,11 @@
       "_type": "request"
     },
     {
-      "_id": "req_5",
-      "name": "Update Kunde",
-      "parentId": "wrk_1",
-      "method": "PUT",
-      "url": "{{ base_url }}/kunden/1",
-      "body": {
-        "mimeType": "application/json",
-        "text": "{\"name\": \"Erika Mustermann\"}"
-      },
-      "_type": "request"
-    },
-    {
       "_id": "req_6",
       "name": "Create Adresse",
       "parentId": "wrk_1",
       "method": "POST",
-      "url": "{{ base_url }}/kunden/1/adresse",
+      "url": "{{ base_url }}/adressen/1",
       "body": {
         "mimeType": "application/json",
         "text": "{\"strasse\": \"Musterstrasse\", \"hausnummer\": \"1\", \"plz\": \"12345\", \"ort\": \"Musterstadt\"}"
@@ -84,7 +72,7 @@
       "name": "Update Adresse",
       "parentId": "wrk_1",
       "method": "PUT",
-      "url": "{{ base_url }}/kunden/1/adresse",
+      "url": "{{ base_url }}/adressen/1",
       "body": {
         "mimeType": "application/json",
         "text": "{\"strasse\": \"Neue Strasse\", \"hausnummer\": \"2\", \"plz\": \"54321\", \"ort\": \"Neustadt\"}"
@@ -96,7 +84,7 @@
       "name": "Delete Adresse",
       "parentId": "wrk_1",
       "method": "DELETE",
-      "url": "{{ base_url }}/kunden/1/adresse",
+      "url": "{{ base_url }}/adresse/1",
       "_type": "request"
     },
     {
@@ -104,7 +92,7 @@
       "name": "Get Adresse by Kunden ID",
       "parentId": "wrk_1",
       "method": "GET",
-      "url": "{{ base_url }}/kunden/1/adresse",
+      "url": "{{ base_url }}/adressen/1",
       "_type": "request"
     }
   ]
