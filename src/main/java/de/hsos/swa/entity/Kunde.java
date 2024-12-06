@@ -1,15 +1,25 @@
 package de.hsos.swa.entity;
 
-import jakarta.enterprise.context.Dependent;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+import jakarta.enterprise.inject.Vetoed;
 
-@Dependent
+@Entity
+@Vetoed
 public class Kunde {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long kundennr;
     private String vorname;
     private String nachname;
+
+    @OneToOne
     private Adresse adresse;
 
-    public Kunde(){
+    public Kunde() {
     }
 
     public Kunde(Long kundennr, String vorname, String nachname, Adresse adresse) {

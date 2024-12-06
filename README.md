@@ -39,9 +39,17 @@ Hinweis: Unsere Controlinstanz wird auch einfach weggeworfen nach der Erstellung
 
 # Aufgabe 2: Mit JPA/JTA
 Fall 1: @ApplicationScoped  @ApplicationScoped
+Rückgabe Kunde Anlegen: 201 - Kunde erstellt
+Rückgabe Kunde Löschen: 404 - Kunde wurde nicht gefunden
 
 Fall 2: @RequestScoped      @ApplicationScoped
+Rückgabe Kunde Anlegen: 201 - Kunde erstellt
+Rückgabe Kunde Löschen: 404 - Kunde wurde nicht gefunden
 
 Fall 3: @ApplicationScoped  @RequestScoped
+Rückgabe Kunde Anlegen: 201 - Kunde erstellt
+Rückgabe Kunde Löschen: 404 - Kunde wurde nicht gefunden
 
 Fall 4: @RequestScoped      @RequestScoped
+Rückgabe Kunde Anlegen: 201 - Kunde erstellt
+Rückgabe Kunde Löschen: 404 - Kunde wurde nicht gefunden

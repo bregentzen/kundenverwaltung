@@ -1,9 +1,17 @@
 package de.hsos.swa.entity;
 
-import jakarta.enterprise.context.Dependent;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.enterprise.inject.Vetoed;
 
-@Dependent
+@Entity
+@Vetoed
 public class Adresse {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String strasse;
     private String hausnummer;
     private String plz;

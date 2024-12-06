@@ -4,6 +4,7 @@ import de.hsos.swa.boundary.dto.AdresseWebDTO;
 import de.hsos.swa.boundary.dto.KundeWebDTO;
 import de.hsos.swa.boundary.dto.KundeWebDTOId;
 import de.hsos.swa.control.KundenService;
+import de.hsos.swa.control.KundenServiceClass;
 import de.hsos.swa.entity.Adresse;
 import de.hsos.swa.entity.Kunde;
 
