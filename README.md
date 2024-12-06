@@ -1,85 +1,47 @@
-# kundenverwaltung
+# Kundenverwaltung mit REST-API
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+# SCOPES TEST
 
-If you want to learn more about Quarkus, please visit its website: <https://quarkus.io/>.
+Die REST-API soll anschließend über Swagger-UI, curl oder Insomnia aufgerufen werden.
+Kunden sind dazu anzulegen, Adressen hinzuzufügen und zu ändern. Dazu sollen folgende
+CDI-Build-in Scopes verwendet werden. Dokumentieren Sie die Zustände a) für einen und b)
+für zwei oder mehr zeitgleiche Zugriffe:
 
-## Running the application in dev mode
+Einheit    .boundary.rs        .control              .entity
+Fall1    @ApplicationScoped  @ApplicationScoped    @Dependent
+Fall2    @RequestScoped      @ApplicationScoped    @Dependent
+Fall3    @ApplicationScoped  @RequestScoped        @Dependent
+Fall4    @RequestScoped      @RequestScoped        @Dependent
 
-You can run your application in dev mode that enables live coding using:
+Test: Der eine Zugriff erstellt einen Kunden und der andere Zugriff löscht diesen bereits.
+Dafür wurde beim erstellen des Kunden ein Delay eingebaut. 
+Während des Delays wird der angelegte Kunde vom anderen Zugriff gelöscht
+und nach dem Delay wird der Kunde in der Array-List gesucht.
 
-```shell script
-./mvnw compile quarkus:dev
-```
+# Aufgabe 1: Ohne JPA/JTA
+Fall 1: @ApplicationScoped  @ApplicationScoped
+Rückgabe Kunde Anlegen: 500 - Kunde ist null
+Rückgabe Kunde Löschen: 204 - Kunde wurde gelöscht
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at <http://localhost:8080/q/dev/>.
+Fall 2: @RequestScoped      @ApplicationScoped
+Rückgabe Kunde Anlegen: 500 - Kunde ist null
+Rückgabe Kunde Löschen: 204 - Kunde wurde gelöscht
 
-## Packaging and running the application
+Fall 3: @ApplicationScoped  @RequestScoped
+Rückgabe Kunde Anlegen: 201 - Kunde erstellt
+Rückgabe Kunde Löschen: 404 - Kunde wurde nicht gefunden
+Hinweis: Unsere Controlinstanz wird auch einfach weggeworfen nach der Erstellung, wodurch der Kunde nicht gefunden wird.
 
-The application can be packaged using:
+Fall 4: @RequestScoped      @RequestScoped
+Rückgabe Kunde Anlegen: 201 - Kunde erstellt
+Rückgabe Kunde Löschen: 404 - Kunde wurde nicht gefunden
+Hinweis: Unsere Controlinstanz wird auch einfach weggeworfen nach der Erstellung, wodurch der Kunde nicht gefunden wird.
 
-```shell script
-./mvnw package
-```
+# Aufgabe 2: Mit JPA/JTA
+Fall 1: @ApplicationScoped  @ApplicationScoped
 
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+Fall 2: @RequestScoped      @ApplicationScoped
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
+Fall 3: @ApplicationScoped  @RequestScoped
 
-If you want to build an _über-jar_, execute the following command:
-
-```shell script
-./mvnw package -Dquarkus.package.jar.type=uber-jar
-```
-
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using:
-
-```shell script
-./mvnw package -Dnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using:
-
-```shell script
-./mvnw package -Dnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/kundenverwaltung-1.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult <https://quarkus.io/guides/maven-tooling>.
-
-## Related Guides
-
-- Hibernate ORM ([guide](https://quarkus.io/guides/hibernate-orm)): Define your persistent model with Hibernate ORM and
-  Jakarta Persistence
-- REST ([guide](https://quarkus.io/guides/rest)): A Jakarta REST implementation utilizing build time processing and
-  Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on
-  it.
-- REST JSON-B ([guide](https://quarkus.io/guides/rest#json-serialisation)): JSON-B serialization support for Quarkus
-  REST. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on
-  it.
-- Hibernate Validator ([guide](https://quarkus.io/guides/validation)): Validate object properties (field, getter) and
-  method parameters for your beans (REST, CDI, Jakarta Persistence)
-- SmallRye OpenAPI ([guide](https://quarkus.io/guides/openapi-swaggerui)): Document your REST APIs with OpenAPI - comes
-  with Swagger UI
-- JDBC Driver - PostgreSQL ([guide](https://quarkus.io/guides/datasource)): Connect to the PostgreSQL database via JDBC
-
-## Provided Code
-
-### Hibernate ORM
-
-Create your first JPA entity
-
-[Related guide section...](https://quarkus.io/guides/hibernate-orm)
-
-### REST
-
-Easily start your REST Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
-#kundenverwaltung
+Fall 4: @RequestScoped      @RequestScoped

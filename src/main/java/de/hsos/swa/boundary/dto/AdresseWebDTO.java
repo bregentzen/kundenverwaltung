@@ -1,5 +1,7 @@
 package de.hsos.swa.boundary.dto;
 
+import java.util.Objects;
+
 public class AdresseWebDTO {
     String strasse;
     String hausnummer;
@@ -46,5 +48,21 @@ public class AdresseWebDTO {
 
     public void setOrt(String ort) {
         this.ort = ort;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AdresseWebDTO that = (AdresseWebDTO) o;
+        return Objects.equals(strasse, that.strasse) &&
+                Objects.equals(hausnummer, that.hausnummer) &&
+                Objects.equals(plz, that.plz) &&
+                Objects.equals(ort, that.ort);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(strasse, hausnummer, plz, ort);
     }
 }
