@@ -1,22 +1,30 @@
 package de.hsos.swa.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.enterprise.context.Dependent;
+import jakarta.persistence.*;
 import jakarta.enterprise.inject.Vetoed;
 
-@Entity
+@Entity(name = "Kunde")
+@Table(name = "Kunden", schema = "public")
 @Vetoed
+@Dependent
 public class Kunde {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long kundennr;
+
+    @Column(name = "Vorname")
     private String vorname;
+
+    @Column(name = "Nachname")
     private String nachname;
 
-    @OneToOne
+    @OneToOne(
+            cascade = CascadeType.PERSIST,
+            optional = true,
+            orphanRemoval = true)
+    @JoinColumn(name = "Adr_ID")
+    //@Column(name = "Adresse")
     private Adresse adresse;
 
     public Kunde() {

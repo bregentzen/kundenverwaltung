@@ -1,20 +1,29 @@
 package de.hsos.swa.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.enterprise.context.Dependent;
+import jakarta.persistence.*;
 import jakarta.enterprise.inject.Vetoed;
 
-@Entity
+@Entity(name="Adresse")
 @Vetoed
+@Table(name = "Adressen", schema = "public")
+@Dependent
 public class Adresse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Adr_ID")
     private Long id;
+
+    @Column(name = "Straße")
     private String strasse;
+
+    @Column(name = "Hausnummer")
     private String hausnummer;
+
+    @Column(name = "PLZ")
     private String plz;
+
+    @Column(name = "Ort")
     private String ort;
 
     public Adresse() {

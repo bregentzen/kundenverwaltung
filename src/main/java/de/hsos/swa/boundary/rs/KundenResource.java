@@ -11,6 +11,7 @@ import de.hsos.swa.entity.Kunde;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 @Path("/kunden")
 @Tag(name = "Kundenverwaltung", description = "Verwaltung von Kunden und Adressen")
+@Transactional(value = Transactional.TxType.REQUIRES_NEW)
 public class KundenResource {
 
     @Inject
@@ -100,6 +102,7 @@ public class KundenResource {
         kundenService.adresseAendern(id, adresseEntity);
         return Response.ok(adresse).build();
     }
+
 
     @DELETE
     @Path("/{id}/adresse")
